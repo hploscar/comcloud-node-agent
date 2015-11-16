@@ -46,8 +46,8 @@ def _installCraneThread():
         try:
             if not genericlinux.installCrane():
                 raise InstallationError('Installation failed. Manual action required.')
-        except:
-            raise ControllerError('Installator execution failure.')
+        except Exception as e:
+            raise ControllerError('Installator execution failure. '+ e.message)
 
         files.writeCraneStatus('installed', 'Crane has been installed and it must be available in some minutes.')
 
