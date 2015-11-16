@@ -4,8 +4,12 @@ from tools import files
 class Check():
     @staticmethod
     def general():
-        docker = files.readDockerStatus()
-        crane = files.readCraneStatus()
+            docker, crane = ['waiting', 'waiting'], ['waiting', 'waiting']
+        try:
+            docker = files.readDockerStatus()
+            crane = files.readCraneStatus()
+        except:
+            pass
 
         status, description = 'installing', 'Components are being installed'
 
