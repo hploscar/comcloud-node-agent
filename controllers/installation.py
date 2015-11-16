@@ -41,8 +41,9 @@ def _installDockerThread():
 
 def _installCraneThread():
     try:
-        if not genericlinux.installCrane():
-            raise InstallationError('Installation failed. Manual action required.')
+        try:
+            if not genericlinux.installCrane():
+                raise InstallationError('Installation failed. Manual action required.')
         except:
             raise ControllerError('Installator execution failure.')
 
