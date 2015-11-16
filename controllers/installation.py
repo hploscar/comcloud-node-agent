@@ -84,6 +84,11 @@ class Installator():
     @staticmethod
     def crane():
         try:
+            files.readDockerStatus()
+        except:
+            raise ControllerError("Docker not installed. Install docker first.")
+
+        try:
             files.initCrane()
         except files.FileExistsError:
             raise ResourceExistsError("Another crane installation is in progress.")

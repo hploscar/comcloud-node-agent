@@ -90,7 +90,7 @@ class GeneralStatus(Resource):
         try:
             return Check.general()
         except Exception as e:
-            return process_error(str(e))
+            return not_started()
 
 @status_ns.route('/docker')
 class DockerStatus(Resource):

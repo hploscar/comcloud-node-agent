@@ -6,8 +6,7 @@ WS_BIND_IP='0.0.0.0'
 WS_BIND_PORT=5050
 
 # Application data
-APP_DATA_DIR='./var/comcloud-agent'
-#APP_DATA_DIR='/var/comcloud-agent'
+APP_DATA_DIR='/var/comcloud-agent'
 
 # Crane
 CRANE_ORIGIN='https://github.com/wtelecom/docker-crane/archive/0.9.5.tar.gz'
