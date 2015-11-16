@@ -44,8 +44,8 @@ def installDocker():
 
 def installCrane():
     # download
-    command = 'wget -O crane.tar.gz '+settings.CRANE_ORIGIN+' | bash'+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
-    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/tmp/crane-install')
+    command = 'wget -O crane.tar.gz '+settings.CRANE_ORIGIN+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/tmp/')
 
     response = ''
     for line in p.stdout.readlines():
@@ -58,7 +58,7 @@ def installCrane():
 
     # extract
     command = 'tar xzvf crane.tar.gz && mv ./docker-crane-* '+settings.CRANE_INSTALL_FOLDER+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
-    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/tmp/crane-install')
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/tmp/')
 
     response = ''
     for line in p.stdout.readlines():

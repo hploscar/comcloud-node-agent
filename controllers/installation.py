@@ -64,7 +64,7 @@ def _installCraneThread():
     except PlatformNotSupportedError as e:
         files.writeCraneStatus('error', e.message)
     except ControllerError as e:
-        files.writeDockerStatus('error', e.message)
+        files.writeCraneStatus('error', e.message)
     except Exception as e:
         files.writeCraneStatus('error', 'unspecified fatal failure')
 
