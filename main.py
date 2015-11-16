@@ -42,6 +42,10 @@ def controller_error(text):
     result = {'error':'controller_error', 'description':text}
     return result, 400
 
+def not_started():
+    result = {'error':'not_started', 'description':'The process has not stated yet.'}
+    return result, 400
+
 # Install
 
 install_ns = api.namespace('install', description='Install operations.')
@@ -78,7 +82,7 @@ class CraneInst(Resource):
 status_ns = api.namespace('status', description='Check the status.')
 
 @status_ns.route('/')
-class Status(Resource):
+class GeneralStatus(Resource):
     @api.doc(description='Deployment status')
     @api.response(500, 'Error processing the request', errorResponseModel)
     @api.response(200, 'OK', statusResponseModel)
@@ -87,6 +91,28 @@ class Status(Resource):
             return Check.general()
         except Exception as e:
             return process_error(str(e))
+
+@status_ns.route('/docker')
+class DockerStatus(Resource):
+    @api.doc(description='Docker installation status')
+    @api.response(500, 'Error processing the request', errorResponseModel)
+    @api.response(200, 'OK', generalResponseModel)
+    def get(self):
+        try:
+            return Check.docker()
+        except Exception as e:
+            return not_started()
+
+@status_ns.route('/crane')
+class CraneStatus(Resource):
+    @api.doc(description='Crane installation status')
+    @api.response(500, 'Error processing the request', errorResponseModel)
+    @api.response(200, 'OK', generalResponseModel)
+    def get(self):
+        try:
+            return Check.crane()
+        except Exception as e:
+            return not_started()
 
 if __name__ == '__main__':
     initializator()

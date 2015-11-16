@@ -26,3 +26,21 @@ class Check():
             'docker': docker[0],
             'crane': crane[0]
         }
+
+    @staticmethod
+    def docker():
+        status = files.readDockerStatus()
+
+        return {
+            'status': status[0],
+            'description': status[1]
+        }
+
+    @staticmethod
+    def crane():
+        status = files.readCraneStatus()
+
+        return {
+            'status': status[0],
+            'description': status[1]
+        }
