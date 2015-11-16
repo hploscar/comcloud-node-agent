@@ -13,6 +13,15 @@ def installDocker():
     for line in p.stdout.readlines():
         response+=line+os.linesep
 
+    p.wait()
+
+    command = 'docker ps '+' 1> '+ files.getLogPath('docker') +' 2> '+ files.getLogPath('docker')
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/tmp')
+
+    response = ''
+    for line in p.stdout.readlines():
+        response+=line+os.linesep
+
     if p.wait() == 0:
         pass
     else:
