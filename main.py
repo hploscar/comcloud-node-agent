@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import settings
+from settings import GENERAL_DEBUG
 
 from flask import Flask, request
 from flask.ext.restplus import Api, apidoc, Resource, reqparse, fields
@@ -10,9 +11,7 @@ from werkzeug.datastructures import FileStorage
 from models import Responses
 from tools import initializator
 
-from controllers import Installator, Check
-
-GENERAL_DEBUG = (True if os.environ.get('DEBUG')=='true' else False)
+from controllers import Installator, Check, ControllerError
 
 app = Flask(__name__)
 api = Api(app, version='1', title='comcloud-node-agent',
@@ -37,7 +36,11 @@ def process_error(text):
     result = {'error':'process_error', 'description':'Error while processing request.'}
     if GENERAL_DEBUG:
         result['description'] = result['description']+' '+text
-    return result
+    return result, 500
+
+def controller_error(text):
+    result = {'error':'controller_error', 'description':text}
+    return result, 400
 
 # Install
 
@@ -51,6 +54,8 @@ class DockerInst(Resource):
     def get(self):
         try:
             return Installator.docker()
+        except ControllerError as e:
+            return controller_error(e.message)
         except Exception as e:
             return process_error(str(e))
 
@@ -62,6 +67,8 @@ class CraneInst(Resource):
     def get(self):
         try:
             return Installator.crane()
+        except ControllerError as e:
+            return controller_error(e.message)
         except Exception as e:
             return process_error(str(e))
 
