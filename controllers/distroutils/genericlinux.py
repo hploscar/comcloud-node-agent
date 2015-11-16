@@ -70,7 +70,7 @@ def installCrane():
         return False
 
     # execute
-    command = 'docker-compose -d -f production.yml up '+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
+    command = 'docker-compose -f production.yml up -d'+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=settings.CRANE_INSTALL_FOLDER)
 
     response = ''
