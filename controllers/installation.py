@@ -27,14 +27,16 @@ def _installDockerThread():
             try:
                 if not genericlinux.installDocker():
                     raise InstallationError('Installation failed. Manual action required.')
-            except:
-                raise ControllerError('Installator execution failure.')
+            except Exception as e:
+                raise ControllerError('Installator execution failure. ' + e.message)
         else:
             raise PlatformNotSupportedError('Could not identify linux distribution')
 
         files.writeDockerStatus('running', 'Docker has been installed and it must be running.')
 
     except PlatformNotSupportedError as e:
+        files.writeDockerStatus('error', e.message)
+    except ControllerError as e:
         files.writeDockerStatus('error', e.message)
     except Exception as e:
         files.writeDockerStatus('error', 'unspecified fatal failure')
