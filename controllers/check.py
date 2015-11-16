@@ -4,7 +4,7 @@ from tools import files
 class Check():
     @staticmethod
     def general():
-            docker, crane = ['waiting', 'waiting'], ['waiting', 'waiting']
+        docker, crane = ['waiting', 'waiting'], ['waiting', 'waiting']
         try:
             docker = files.readDockerStatus()
             crane = files.readCraneStatus()
