@@ -69,6 +69,19 @@ def installCrane():
     else:
         return False
 
+    # generate certificates
+    command = 'genCerts.sh'+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=settings.CRANE_INSTALL_FOLDER)
+
+    response = ''
+    for line in p.stdout.readlines():
+        response+=line+os.linesep
+
+    if p.wait() == 0:
+        pass
+    else:
+        return False
+
     # execute
     command = 'docker-compose -f production.yml up -d'+' 1> '+ files.getLogPath('crane') +' 2> '+ files.getLogPath('crane')
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=settings.CRANE_INSTALL_FOLDER)
