@@ -11,5 +11,5 @@ APP_DATA_DIR='/var/comcloud-agent'
 # Crane
 CRANE_ORIGIN='https://github.com/wtelecom/docker-crane/archive/0.9.5.tar.gz'
 CRANE_INSTALL_FOLDER='/usr/src/crane'
-CRANE_CON_ATT=15 # Number of connection attempts while waiting crane to come up
+CRANE_CON_ATT=20 # Number of connection attempts while waiting crane to come up
 CRANE_TIMEBETWEENATT=30 # Number of seconds between attempts
