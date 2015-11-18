@@ -7,7 +7,7 @@ import settings
 
 def installDocker():
     # docker engine
-    command = 'curl https://get.docker.com/ | bash'+' 1> '+ files.getLogPath('docker') +' 2> '+ files.getLogPath('docker')
+    command = 'curl https://raw.githubusercontent.com/wtelecom/comcloud-node-agent/1.0/resources/installdocker.sh | bash'+' 1> '+ files.getLogPath('docker') +' 2> '+ files.getLogPath('docker')
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd='/tmp')
 
     response = ''
