@@ -8,3 +8,4 @@ def initializator():
         os.makedirs(os.path.join(s.APP_DATA_DIR, 'downloads'), 0775)
         os.makedirs(os.path.join(s.APP_DATA_DIR, 'docker'), 0775)
         os.makedirs(os.path.join(s.APP_DATA_DIR, 'crane'), 0775)
+        os.makedirs(os.path.join(s.APP_DATA_DIR, 'deploy'), 0775)

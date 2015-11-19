@@ -11,7 +11,7 @@ from werkzeug.datastructures import FileStorage
 from models import Responses
 from tools import initializator
 
-from controllers import Installator, Check, ControllerError
+from controllers import Installator, Check, Deploy, ControllerError
 
 app = Flask(__name__)
 api = Api(app, version='1', title='comcloud-node-agent',
@@ -76,6 +76,26 @@ class CraneInst(Resource):
         except Exception as e:
             return process_error(str(e))
 
+# Deploy
+
+deployArgs = api.parser()
+deployArgs.add_argument('package', type=FileStorage, help='Package to be deployed' , location='files')
+
+deploy_ns = api.namespace('deploy', description='Deploy packages.')
+
+@deploy_ns.route('/')
+class DeployService(Resource):
+    @api.doc(description='Deploy service', parser=deployArgs)
+    @api.response(500, 'Error processing the request', errorResponseModel)
+    @api.response(200, 'OK', generalResponseModel)
+    def post(self):
+        try:
+            return Deploy.new(request.files['package'])
+        except ControllerError as e:
+            return controller_error(e.message)
+        except Exception as e:
+            return process_error(str(e))
+
 
 # Status
 
@@ -90,6 +110,7 @@ class GeneralStatus(Resource):
         try:
             return Check.general()
         except Exception as e:
+            return str(e)
             return not_started()
 
 @status_ns.route('/docker')
@@ -111,6 +132,17 @@ class CraneStatus(Resource):
     def get(self):
         try:
             return Check.crane()
+        except Exception as e:
+            return not_started()
+
+@status_ns.route('/deploy')
+class DeployStatus(Resource):
+    @api.doc(description='Deploy status')
+    @api.response(500, 'Error processing the request', errorResponseModel)
+    @api.response(200, 'OK', generalResponseModel)
+    def get(self):
+        try:
+            return Check.deploy()
         except Exception as e:
             return not_started()
 

@@ -17,6 +17,12 @@ def initCrane():
     _createFile('crane/info', content='Crane is being installed')
 
 
+def initDeploy():
+    _createFile('deploy/log', content='>> Deploying')
+    _createFile('deploy/status', content='installing')
+    _createFile('deploy/info', content='Package is being installed')
+
+
 def _createFile(relativepath, content='', replace=False):
     path = os.path.join(s.APP_DATA_DIR, relativepath)
 
@@ -38,6 +44,11 @@ def writeCraneStatus(status, information=''):
     _createFile('crane/status', content=status, replace=True)
     _createFile('crane/info', content=information, replace=True)
 
+def writeDeployStatus(status, information=''):
+    _createFile('deploy/status', content=status, replace=True)
+    _createFile('deploy/info', content=information, replace=True)
+
+
 def readDockerStatus():
     status, description = None, None
     with open(os.path.join(s.APP_DATA_DIR, 'docker/status'), "r") as aux:
@@ -56,6 +67,20 @@ def readCraneStatus():
         description=aux.read().replace('\n', '')
 
     return status, description
+
+
+def readDeployStatus():
+    status, description = None, None
+    with open(os.path.join(s.APP_DATA_DIR, 'deploy/status'), "r") as aux:
+        status=aux.read().replace('\n', '')
+    with open(os.path.join(s.APP_DATA_DIR, 'deploy/info'), "r") as aux:
+        description=aux.read().replace('\n', '')
+
+    return status, description
+
+def removeDeploy():
+    shutil.rmtree(os.path.join(s.APP_DATA_DIR, 'deploy'), ignore_errors=True)
+    os.makedirs(os.path.join(s.APP_DATA_DIR, 'deploy'), 0775)
 
 def getLogPath(component):
     path = os.path.join(s.APP_DATA_DIR, component)
