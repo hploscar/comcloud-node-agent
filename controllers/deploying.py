@@ -26,7 +26,8 @@ class Deploy():
                 if not commands.execute('docker-compose up -d', \
                                     cwd=os.path.join(path, 'package'), \
                                     stdout=os.path.join(path, 'compose_log.txt'), \
-                                    errout=os.path.join(path, 'compose_err_log.txt')):
+                                    errout=os.path.join(path, 'compose_err_log.txt'),
+                                    background=True):
                     raise ControllerError("Compose returned !0")
             except ControllerError as e:
                 raise e
