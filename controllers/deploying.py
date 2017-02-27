@@ -20,7 +20,8 @@ class Deploy():
             package.save(archivepath)
             # extract
             archive = tarfile.open(name=archivepath)
-            archive.extractall(path=os.path.join(path, 'package'))
+            #archive.extractall(path=os.path.join(path, 'package'))
+            archive.extractall(path=path)
             #compose up
             try:
                 if not commands.execute('docker-compose up -d', \
